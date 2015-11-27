@@ -1,11 +1,11 @@
 # zte-openc-switch-bluedroid
 Scripts permettant de passer le ZTE Open C en bluedroid.
 
-Liste des scripts :__
-- update-bootimage/update-bootimage.sh : Permet de modifier l'image de boot, afin de gérer les changements au niveau du bluetooth.__
-- switch-openc-to-bluedroid/switch-openc-to-bluedroid.sh : Permet d'envoyer l'image de boot modifié, et les autres fichiers nécessaires, sur le ZTE Open C.__
+Liste des scripts :  
+- update-bootimage/update-bootimage.sh : Permet de modifier l'image de boot, afin de gérer les changements au niveau du bluetooth.  
+- switch-openc-to-bluedroid/switch-openc-to-bluedroid.sh : Permet d'envoyer l'image de boot modifié, et les autres fichiers nécessaires, sur le ZTE Open C.  
 
-Prérequis:__
+Prérequis:  
 	- fichier boot.img de l'Open C : Il est récupérable au sein du pack root de ZTE.
 
 Procédure :
