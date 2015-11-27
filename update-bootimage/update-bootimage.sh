@@ -26,7 +26,7 @@ IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp
 TESTW_FILE=$BASE_DIR/testwrite
 OUT_DIR=$BASE_DIR/out
-OUT_FILE=boot_bluetooth.img
+OUT_FILE=boot.img
 
 if [[ $1 == "-h" ||  $1 == "--help" ]]; then
         echo "Ce script permet de modifier l'image boot du ZTE Open C, afin de prendre en charge bluedroid" &&
