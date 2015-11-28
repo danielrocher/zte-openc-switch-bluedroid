@@ -11,17 +11,17 @@ Prérequis:
 - Linux installé
 - ADB installé, voir ce lien : https://developer.mozilla.org/fr/Firefox_OS/Prerequis_pour_construire_Firefox_OS#Pour_Linux_.3A_configurer_la_r.C3.A8gle_udev_li.C3.A9e_au_t.C3.A9l.C3.A9phone
 
-Procédure mise à jour boot.img :  
-1) Se positionner dans le dossier 'update-bootimage'.  
-2) Copier le boot.img du pack root ZTE dans le dossier 'put-files-here'.  
-3) Exécuter update-bootimage.sh, pour obtenir l'image de boot modifié.  
-Procédure envoi fichier vers téléphone :  
-1) Se positionner dans le dossier 'switch-openc-to-bluedroid'.  
-2) Copier l'image généré par update-bootimage.sh (update-bootimage/out/boot.img) dans le dossier 'put-files-here'.  
-3) Connecter l'Open C à l'ordinateur exécutant le script.  
-4) Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.
+**Procédure mise à jour boot.img**  
+1. Se positionner dans le dossier 'update-bootimage'.
+2. Copier le boot.img du pack root ZTE dans le dossier 'put-files-here'.
+3. Exécuter update-bootimage.sh, pour obtenir l'image de boot modifié.
+**Procédure envoi fichier vers téléphone**  
+1. Se positionner dans le dossier 'switch-openc-to-bluedroid'.
+2. Copier l'image généré par update-bootimage.sh (update-bootimage/out/boot.img) dans le dossier 'put-files-here'.
+3. Connecter l'Open C à l'ordinateur exécutant le script.
+4. Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.
 
-Pour plus d'informations sur les raisons de ces manipulations pour l'Open C, les anglophones pourront se rendre sur le bug 1213591 de Bugzilla@Mozilla : https://bugzilla.mozilla.org/show_bug.cgi?id=1213591
+Pour plus d'informations sur les raisons de ces manipulations pour l'Open C, les anglophones pourront se rendre sur le bug 1213591 de [Bugzilla@Mozilla](https://bugzilla.mozilla.org/show_bug.cgi?id=1213591)
 
 -------------------------------------------------------
 
