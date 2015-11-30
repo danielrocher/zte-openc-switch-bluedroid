@@ -20,7 +20,7 @@
 
 
 ### Variables ###
-BASE_DIR=`pwd`
+BASE_DIR=`dirname $(readlink -f $0)`
 OPENC_KK_DIR=$BASE_DIR/GEN_EU_P821E10V1.0.0B10_FUS_DL
 IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp

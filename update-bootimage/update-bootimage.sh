@@ -20,7 +20,7 @@
 
 
 ### Variables ###
-BASE_DIR=`pwd`
+BASE_DIR=`dirname $(readlink -f $0)`
 MKBOOT_DIR=$BASE_DIR/mkbootimg_tools-master
 IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp
