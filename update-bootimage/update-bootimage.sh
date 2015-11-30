@@ -21,7 +21,7 @@
 
 ### Variables ###
 BASE_DIR=`dirname $(readlink -f $0)`
-MKBOOT_DIR=$BASE_DIR/mkbootimg_tools-master
+MKBOOT_DIR=$BASE_DIR/mkbootimg_tools-bootimg-openc-ok
 IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp
 TESTW_FILE=$BASE_DIR/testwrite
@@ -51,7 +51,7 @@ fi
 
 	# Récupération de l'utilitaire mkboot, si nécessaire
 	if [[ ! -d $MKBOOT_DIR && ! -f $TMP_DIR/mkboot.zip ]]; then
-		(wget -O $TMP_DIR/mkboot.zip https://github.com/xiaolu/mkbootimg_tools/archive/master.zip && unzip $TMP_DIR/mkboot.zip) || (echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1)
+		(wget -O $TMP_DIR/mkboot.zip https://github.com/micgeri/mkbootimg_tools/archive/bootimg-openc-ok.zip && unzip $TMP_DIR/mkboot.zip -d $BASE_DIR) || (echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1)
 	elif [[ ! -d $MKBOOT_DIR ]]; then
 		unzip $TMP_DIR/mkboot.zip
 	fi

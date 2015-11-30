@@ -29,5 +29,5 @@ Pour plus d'informations sur les raisons de ces manipulations pour l'Open C, les
 
 REMARQUE :
 
-La décompilation et la recompilation du fichier boot.img sont effectués à l'aide d'outils tiers : mkbootimg_tools.
-Ces outils sont disponibles à cette adresse : https://github.com/xiaolu/mkbootimg_tools
+La décompilation et la recompilation du fichier boot.img sont effectués à l'aide d'outils tiers : mkbootimg_tools. Un fork de ces outils a été effectué afin de garder la compatibilité avec le boot.img de l'Open C.  
+Ces outils sont disponibles dans leurs dernières versions à cette adresse : https://github.com/xiaolu/mkbootimg_tools
