@@ -53,8 +53,8 @@ fi
 	rm -rf $TMP_DIR && mkdir $TMP_DIR && mkdir $TMP_DIR/img_system_kk
 
 	# Extraction du zip contenant les fichiers
-	echo "$0 : Extraction de l'archive contenant les premiers fichiers pour bluedroid..."
-	unzip $BASE_DIR/openc-system-files.zip -d $TMP_DIR >/dev/null
+	echo "$0 : Extraction de l'archive contenant les premiers fichiers pour bluedroid..." &&
+	unzip $BASE_DIR/openc-system-files.zip -d $TMP_DIR >/dev/null &&
 
 	# Téléchargement et extraction de l'archive contenant les fichiers
 	echo "$0 : Téléchargement et extraction si nécessaire de l'archive Kitkat pour Open C..."
@@ -74,29 +74,29 @@ fi
 	echo "$0 : Démontage de l'image system.img (le mot de passe root peut être requis pour la commande 'umount')..." &&
 	(sudo umount $TMP_DIR/img_system_kk || su -c "umount $TMP_DIR/img_system_kk") &&
 	
-	# Arrêt de Firefox OS
-	adb shell stop b2g
+	# Arrêt de Firefox OS et remontage de la partition system
+	adb shell stop b2g &&
+	adb remount >/dev/null &&
 
 	# Envoi de l'image boot sur la mémoire interne du téléphone et application de celle-ci
-	echo "$0 : Envoi des fichiers sur le téléphone..."
+	echo "$0 : Envoi des fichiers sur le téléphone..." &&
 	adb push $IN_DIR/boot.img /storage/sdcard/boot_bth.img >/dev/null &&
-	adb shell dd if=/storage/sdcard/boot_bth.img of=/dev/block/mmcblk0p7 >/dev/null
+	adb shell dd if=/storage/sdcard/boot_bth.img of=/dev/block/mmcblk0p7 >/dev/null &&
 	adb shell rm /storage/sdcard/boot_bth.img
 
 	# Envoi des fichiers sur le téléphone
-	adb remount >/dev/null &&
 	adb push $TMP_DIR/system /system >/dev/null 2>&1 &&
 
 	# Attributions des utilisateurs/droits sur les fichiers
-	echo "$0 : Attribution des permissions sur les fichiers..."
-	adb shell chmod 644 /system/etc/bluetooth/*
-	adb shell chmod 644 /system/lib/libbt-*
-	adb shell chmod 644 /system/lib/hw/audio.a2dp.default.so
-	adb shell chmod 644 /system/lib/hw/bluetooth.default.so
-	adb shell chmod 644 /system/vendor/lib/libbt*.so
+	echo "$0 : Attribution des permissions sur les fichiers..." &&
+	adb shell chmod 644 /system/etc/bluetooth/* &&
+	adb shell chmod 644 /system/lib/libbt-* &&
+	adb shell chmod 644 /system/lib/hw/audio.a2dp.default.so &&
+	adb shell chmod 644 /system/lib/hw/bluetooth.default.so &&
+	adb shell chmod 644 /system/vendor/lib/libbt*.so &&
 
 	# Finalisation/redémarrage du téléphone
-	echo "$0 : Redémarrage du téléphone."
+	echo "$0 : Redémarrage du téléphone..." &&
 	adb shell sync &&
 	adb shell reboot
 ) ||
