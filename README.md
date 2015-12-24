@@ -23,7 +23,7 @@ Prérequis:
 3. Donner les droits d'exécution au script switch-openc-to-bluedroid.sh.  
 4. Connecter l'Open C à l'ordinateur exécutant le script.  
 5. Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.  
-** Procédure restauration pile bluetooth origine **  
+**Procédure restauration pile bluetooth origine**  
 1. Se positionner dans le dossier 'revert-openc-to-bluez'.  
 2. Si détention du ZIP du pack root, le copier dans le dossier 'put-files-here', puis renommer cette copie 'packroot.zip' (sans les quotes).  
 3. Donner les droits d'exécution au script revert-openc-to-bluez.sh.  
