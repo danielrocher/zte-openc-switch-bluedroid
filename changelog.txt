@@ -1,9 +1,0 @@
-v0.3 - 27/11/2015  
-- Finalisation script switch-openc-to-bluedroid.Sh
-
-v0.2 - 26/11/2015  
-- création du script switch-openc-to-bluedroid.sh
-- placement des scripts dans des dossiers distincts
-
-v0.1 - 25/11/2015  
-- Version initiale : création du script update-bootimage.sh
