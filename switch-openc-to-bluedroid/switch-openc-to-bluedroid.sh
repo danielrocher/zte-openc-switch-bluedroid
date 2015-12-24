@@ -1,7 +1,7 @@
 #! /bin/bash
 
 ###################################
-# Préparation boot.img pour Open C
+# Passage pile bluetooth Open C à bluedroid
 # Copyright (C) 2015 Micgeri
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ fi
 	fi
 
 	# Re-création de la structure
-	rm -rf $TMP_DIR && mkdir $TMP_DIR && mkdir $TMP_DIR/img_system_kk
+	rm -rf $TMP_DIR && mkdir -p $TMP_DIR/img_system_kk
 
 	# Extraction du zip contenant les fichiers
 	echo "$0 : Extraction de l'archive contenant les premiers fichiers pour bluedroid..." &&
@@ -65,8 +65,8 @@ fi
 	fi
 
 	# Montage du fichier system.img sur un dossier temporaire
-	echo "$0 : Montage de l'image system.img sur un dossier temporaire (le mot de passe root peut être requis pour la commande 'umount')..." &&
-	(sudo mount $OPENC_KK_DIR/system.img $TMP_DIR/img_system_kk >/dev/null || su -c "mount $TMP_DIR/GEN_EU_P821E10V1.0.0B10_FUS_DL/system.img $TMP_DIR/img_system_kk") &&
+	echo "$0 : Montage de l'image system.img sur un dossier temporaire (le mot de passe root peut être requis pour la commande 'mount')..." &&
+	(sudo mount $OPENC_KK_DIR/system.img $TMP_DIR/img_system_kk >/dev/null || su -c "mount $OPENC_KK_DIR/system.img $TMP_DIR/img_system_kk") &&
 	mkdir -p $TMP_DIR/system/vendor/lib &&
 	echo "$0 : Récupération des blobs..." &&
 	cp -p $TMP_DIR/img_system_kk/vendor/lib/libbt* $TMP_DIR/system/vendor/lib/ &&
