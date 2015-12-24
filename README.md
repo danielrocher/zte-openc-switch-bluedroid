@@ -4,6 +4,7 @@ Scripts permettant de passer le ZTE Open C en bluedroid.
 Liste des scripts :
 - update-bootimage/update-bootimage.sh : Permet de modifier l'image de boot, afin de gérer les changements au niveau du bluetooth.  
 - switch-openc-to-bluedroid/switch-openc-to-bluedroid.sh : Permet d'envoyer l'image de boot modifié, et les autres fichiers nécessaires, sur le ZTE Open C.  
+- revert-openc-to-bluez/revert-openc-to-bluez.sh : Permet de restaurer la pile bluetooth d'origine.  
 
 Prérequis:
 - ZTE Open C déjà rooté.
@@ -21,7 +22,14 @@ Prérequis:
 2. Copier l'image généré par update-bootimage.sh (update-bootimage/out/boot.img) dans le dossier 'put-files-here'.  
 3. Donner les droits d'exécution au script switch-openc-to-bluedroid.sh.  
 4. Connecter l'Open C à l'ordinateur exécutant le script.  
-5. Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.
+5. Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.  
+** Procédure restauration pile bluetooth origine **  
+1. Se positionner dans le dossier 'revert-openc-to-bluez'.  
+2. Si détention du ZIP du pack root, le copier dans le dossier 'put-files-here', puis renommer cette copie 'packroot.zip' (sans les quotes).  
+3. Donner les droits d'exécution au script revert-openc-to-bluez.sh.  
+4. Connecter l'Open C à l'ordinateur exécutant le script.  
+5. Exécuter revert-openc-to-bluez.sh, et le laisser travailler jusqu'au redémarrage du téléphone.  
+
 
 Pour plus d'informations sur les raisons de ces manipulations pour l'Open C, les anglophones pourront se rendre sur le bug 1213591 de [Bugzilla@Mozilla](https://bugzilla.mozilla.org/show_bug.cgi?id=1213591)
 
