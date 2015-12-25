@@ -58,7 +58,9 @@ fi
 
 	# Préparation de l'image de boot
 	# Extraction
+	echo "$0 : Extraction de l'image de boot original..." &&
 	$MKBOOT_DIR/mkboot $IN_DIR/boot.img $TMP_DIR/boot &&
+	echo "$0 : Ajout des éléments pour la nouvelle image..." &&
 	# Modification du fichier init.rc
 	cd $TMP_DIR &&
 	patch -p1 < $BASE_DIR/prepare-bootimage-for-bluedroid.patch &&
@@ -66,6 +68,7 @@ fi
 	# Copie du fichier init.bluetooth.rc dans le dossier
 	cp -p $BASE_DIR/init.bluetooth.rc $TMP_DIR/boot/ramdisk/ &&
 	# Compilation de la nouvelle image
+	echo "$0 : Création de la nouvelle image de boot..." &&
 	$MKBOOT_DIR/mkboot $TMP_DIR/boot $OUT_DIR/$OUT_FILE &&
 
 	echo "$0 : Le fichier $OUT_FILE a été généré avec succès dans $OUT_DIR !"
