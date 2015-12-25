@@ -1,5 +1,5 @@
 # zte-openc-switch-bluedroid
-Scripts permettant de passer le ZTE Open C en bluedroid.
+Scripts permettant de passer le ZTE Open C en bluedroid.  
 *Testés sur Debian Wheezy (7.X)*
 
 Liste des scripts :
