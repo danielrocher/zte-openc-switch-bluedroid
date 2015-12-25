@@ -50,10 +50,12 @@ fi
 	rm -rf $OUT_DIR && mkdir $OUT_DIR
 
 	# Récupération de l'utilitaire mkboot, si nécessaire
-	if [[ ! -d $MKBOOT_DIR && ! -f $TMP_DIR/mkboot.zip ]]; then
-		(wget -O $TMP_DIR/mkboot.zip https://github.com/micgeri/mkbootimg_tools/archive/bootimg-openc-ok.zip && unzip $TMP_DIR/mkboot.zip -d $BASE_DIR) || (echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1)
+	if [[ ! -d $MKBOOT_DIR && ! -f $IN_DIR/mkboot.zip ]]; then
+		echo "$0 : Téléchargement et extraction des outils mkboot..." &&
+		(wget -nv -O $IN_DIR/mkboot.zip https://github.com/micgeri/mkbootimg_tools/archive/bootimg-openc-ok.zip && unzip $IN_DIR/mkboot.zip -d $BASE_DIR >/dev/null) || (echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1)
 	elif [[ ! -d $MKBOOT_DIR ]]; then
-		unzip $TMP_DIR/mkboot.zip
+		echo "$0 : Extraction des outils mkboot..." &&
+		unzip $IN_DIR/mkboot.zip >/dev/null
 	fi
 
 	# Préparation de l'image de boot
@@ -62,9 +64,7 @@ fi
 	$MKBOOT_DIR/mkboot $IN_DIR/boot.img $TMP_DIR/boot &&
 	echo "$0 : Ajout des éléments pour la nouvelle image..." &&
 	# Modification du fichier init.rc
-	cd $TMP_DIR &&
-	patch -p1 < $BASE_DIR/prepare-bootimage-for-bluedroid.patch &&
-	cd - &&
+	patch -s $TMP_DIR/boot/ramdisk/init.rc $BASE_DIR/prepare-bootimage-for-bluedroid.patch &&
 	# Copie du fichier init.bluetooth.rc dans le dossier
 	cp -p $BASE_DIR/init.bluetooth.rc $TMP_DIR/boot/ramdisk/ &&
 	# Compilation de la nouvelle image
