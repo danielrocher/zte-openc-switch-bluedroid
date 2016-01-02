@@ -58,10 +58,10 @@ fi
 
 	# Téléchargement et extraction de l'archive contenant les fichiers
 	echo "$0 : Téléchargement et extraction si nécessaire de l'archive Kitkat pour Open C..."
-	if [[ ! -d $OPENC_KK_DIR && ! -f $TMP_DIR/openc-kk.zip ]]; then
-		(wget -O $TMP_DIR/openc-kk.zip http://down.comebuy.com/GEN_EU_P821E10V1.0.0B10_FUS_DL.zip && unzip $TMP_DIR/openc-kk.zip -d $BASE_DIR) || (echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1)
+	if [[ ! -d $OPENC_KK_DIR && ! -f $IN_DIR/openc-kk.zip ]]; then
+		(wget -nv -O $IN_DIR/openc-kk.zip http://down.comebuy.com/GEN_EU_P821E10V1.0.0B10_FUS_DL.zip && unzip $IN_DIR/openc-kk.zip -d $BASE_DIR >/dev/null) || (echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1)
 	elif [[ ! -d $OPENC_KK_DIR ]]; then
-		unzip $TMP_DIR/openc-kk.zip -d $BASE_DIR  >/dev/null || (echo "$0 : Echec de l'extraction du fichier" && exit 1)
+		unzip $IN_DIR/openc-kk.zip -d $BASE_DIR  >/dev/null || (echo "$0 : Echec de l'extraction du fichier" && exit 1)
 	fi
 
 	# Montage du fichier system.img sur un dossier temporaire
