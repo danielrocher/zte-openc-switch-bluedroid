@@ -39,4 +39,9 @@ Pour plus d'informations sur les raisons de ces manipulations pour l'Open C, les
 REMARQUE :
 
 La décompilation et la recompilation du fichier boot.img sont effectués à l'aide d'outils tiers : mkbootimg_tools. Un fork de ces outils a été effectué afin de garder la compatibilité avec le boot.img de l'Open C.  
-Ces outils sont disponibles dans leurs dernières versions à cette adresse : https://github.com/xiaolu/mkbootimg_tools
+Ces outils sont disponibles dans leurs dernières versions à cette adresse : https://github.com/xiaolu/mkbootimg_tools  
+
+
+AUTRE REMARQUE :
+
+Ce script a été écrit pour le boot.img d'origine (tel que fournit par ZTE). Il est donc possible qu'il ne fonctionne pas si l'image a été modifié. Dans ce cas, il faudra effectuer les manipulations manuellement.
