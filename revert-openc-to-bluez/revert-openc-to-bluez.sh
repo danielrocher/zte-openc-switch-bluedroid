@@ -21,6 +21,7 @@
 
 ### Variables ###
 BASE_DIR=`dirname $(readlink -f $0)`
+UPDATE_BOOTIMG_IN_DIR=$BASE_DIR/../update-bootimage/put-files-here
 OPENC_BASE_DIR=$BASE_DIR/P821A10_FR_ENG_20140806
 IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp
@@ -38,6 +39,11 @@ fi
 	# Vérification des droits en écriture sur le dossier courant
 	(touch $TESTW_FILE 2>/dev/null && rm $TESTW_FILE 2>/dev/null) || (echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit 1)
 
+	# Vérification de l'existence du fichier boot.img
+	if [[ ! -f $IN_DIR/boot.img ]]; then
+		cp $UPDATE_BOOTIMG_IN_DIR/boot.img $IN_DIR || (echo "$0 : Merci de copier le fichier boot.img modifié dans le dossier $IN_DIR" && exit 1)
+	fi
+
 	# Vérification de la présence du téléphone
 	adb shell getprop >/dev/null 2>&1
 	if [[ $? -ne 0 ]]; then
@@ -51,7 +57,7 @@ fi
 	echo "$0 : Téléchargement et extraction si nécessaire des fichiers du Pack Root pour Open C..."
 	if [[ ! -d $OPENC_BASE_DIR && ! -f $IN_DIR/packroot.zip ]]; then
 		(
-			wget -O $IN_DIR/packroot.zip http://www.ztefrance.com/downloads/Pack_root_du_ZTE_Open_C.zip &&
+			wget -nv -O $IN_DIR/packroot.zip http://www.ztefrance.com/downloads/Pack_root_du_ZTE_Open_C.zip &&
 			unzip $IN_DIR/packroot.zip -d $TMP_DIR >/dev/null &&
 			unzip $TMP_DIR/Pack\ root\ du\ ZTE\ Open\ C/P821A10_FR_ENG_20140806.zip -d $BASE_DIR >/dev/null
 		) || (
@@ -90,7 +96,7 @@ fi
 
 	# Envoi de l'image boot sur la mémoire interne du téléphone et application de celle-ci
 	echo "$0 : Envoi des fichiers sur le téléphone..." &&
-	adb push $OPENC_BASE_DIR/boot.img /storage/sdcard/boot_bluez.img >/dev/null &&
+	adb push $IN_DIR/boot.img /storage/sdcard/boot_bluez.img >/dev/null &&
 	adb shell dd if=/storage/sdcard/boot_bluez.img of=/dev/block/mmcblk0p7 >/dev/null &&
 	adb shell rm /storage/sdcard/boot_bluez.img
 	# Envoi des fichiers sur le téléphone
