@@ -9,7 +9,7 @@ Liste des scripts :
 
 Prérequis:
 - ZTE Open C déjà rooté.
-- fichier boot.img de l'Open C : Il est récupérable au sein du pack root de ZTE.
+- fichier boot.img de l'Open C : Il est récupérable au sein du pack root de ZTE, ou dans le dossier zte-openc-add-timekeep-at-boot/ (fichier boot_timekeep.img) si vous avez exécuté ce dernier.
 - Linux installé
 - ADB installé, voir ce lien : https://developer.mozilla.org/fr/Firefox_OS/Prerequis_pour_construire_Firefox_OS#Pour_Linux_.3A_configurer_la_r.C3.A8gle_udev_li.C3.A9e_au_t.C3.A9l.C3.A9phone
 
