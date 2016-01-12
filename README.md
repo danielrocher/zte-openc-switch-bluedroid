@@ -17,9 +17,10 @@ Prérequis:
 1. Se positionner dans le dossier 'update-bootimage'.  
 2. Copier le boot.img du pack root ZTE dans le dossier 'put-files-here'.  
 3. Exécuter update-bootimage.sh, pour obtenir l'image de boot modifié.  
+4. Si la procédure suivante est nécessaire, répondre "o" (sans les guillemets) à la question posée par le script.  
 **Procédure envoi fichier vers téléphone**  
 1. Se positionner dans le dossier 'switch-openc-to-bluedroid'.  
-2. Copier l'image généré par update-bootimage.sh (update-bootimage/out/boot.img) dans le dossier 'put-files-here'.  
+2. *Facultatif si point 4 précédent effectué : Copier l'image généré par update-bootimage.sh (update-bootimage/out/boot.img) dans le dossier 'put-files-here'.*    
 3. Connecter l'Open C à l'ordinateur exécutant le script.  
 4. Exécuter switch-openc-to-bluedroid.sh, et le laisser travailler jusqu'au redémarrage du téléphone.  
 **Procédure restauration pile bluetooth origine**  
