@@ -27,6 +27,7 @@ TMP_DIR=$BASE_DIR/tmp
 TESTW_FILE=$BASE_DIR/testwrite
 OUT_DIR=$BASE_DIR/out
 OUT_FILE=boot.img
+OUT_FOR_SWITCH_DIR=$BASE_DIR/../switch-openc-to-bluedroid/put-files-here
 
 if [[ $1 == "-h" ||  $1 == "--help" ]]; then
         echo "Ce script permet de modifier l'image boot du ZTE Open C, afin de prendre en charge bluedroid" &&
@@ -70,7 +71,15 @@ fi
 	# Compilation de la nouvelle image
 	echo "$0 : Création de la nouvelle image de boot..." &&
 	$MKBOOT_DIR/mkboot $TMP_DIR/boot $OUT_DIR/$OUT_FILE &&
-
 	echo "$0 : Le fichier $OUT_FILE a été généré avec succès dans $OUT_DIR !"
+
+	# Proposition de copier le fichier généré pour l'envoi des éléments vers le téléphone
+	echo "---" &&
+	read -p "Voulez-vous copier le fichier généré pour l'exécution du script switch-openc-to-bluedroid.sh [O/n] ? (n par défaut) " rep
+	if [[ $rep == "O" || $rep == "o" ]]; then
+		mkdir -p $OUT_FOR_SWITCH_DIR &&
+		cp $OUT_DIR/$OUT_FILE $OUT_FOR_SWITCH_DIR/ &&
+		echo "$0  : Le fichier $OUT_FILE a été copié dans $OUT_FOR_SWITCH_DIR/ avec succès !"
+	fi
 ) ||
 echo "$0 : Une erreur est survenue."
