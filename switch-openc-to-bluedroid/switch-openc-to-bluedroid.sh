@@ -21,13 +21,14 @@
 
 ### Variables ###
 BASE_DIR=`dirname $(readlink -f $0)`
-OPENC_KK_DIR=$BASE_DIR/GEN_EU_P821E10V1.0.0B10_FUS_DL
+OPENC_KK_DIR=$BASE_DIR/P821E10_KITKAT
 IN_DIR=$BASE_DIR/put-files-here
 TMP_DIR=$BASE_DIR/tmp
 TESTW_FILE=$BASE_DIR/testwrite
 
 if [[ $1 == "-h" ||  $1 == "--help" ]]; then
         echo "Ce script permet d'envoyer les fichiers nécessaires à la prise en charge de bluedroid sur l'Open C" &&
+		echo "ATTENTION ! B2G SERA ARRETE AU COURS DES OPERATIONS ET LE TELEPHONE REDEMARRERA."
         echo &&
         echo "Utilisation : ${BASH_SOURCE[0]}" &&
         echo "Le fichier boot.img doit être placé dans $IN_DIR" &&
@@ -50,7 +51,7 @@ fi
 	fi
 
 	# Re-création de la structure
-	rm -rf $TMP_DIR && mkdir -p $TMP_DIR/img_system_kk
+	rm -rf $TMP_DIR && mkdir $TMP_DIR
 
 	# Extraction du zip contenant les fichiers
 	echo "$0 : Extraction de l'archive contenant les premiers fichiers pour bluedroid..." &&
@@ -58,21 +59,22 @@ fi
 
 	# Téléchargement et extraction de l'archive contenant les fichiers
 	echo "$0 : Téléchargement et extraction si nécessaire de l'archive Kitkat pour Open C..."
-	if [[ ! -d $OPENC_KK_DIR && ! -f $IN_DIR/openc-kk.zip ]]; then
-		(wget -nv -O $IN_DIR/openc-kk.zip http://down.comebuy.com/GEN_EU_P821E10V1.0.0B10_FUS_DL.zip && unzip $IN_DIR/openc-kk.zip -d $BASE_DIR >/dev/null) || (echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1)
+	if [[ ! -d $OPENC_KK_DIR && ! -f $IN_DIR/kk.zip ]]; then
+		(
+			wget -nv -O $IN_DIR/kk.zip http://download.ztedevice.com/UpLoadFiles/product/643/4880/soft/2014101309394339.zip &&
+			unzip $IN_DIR/kk.zip -d $TMP_DIR >/dev/null &&
+			find $TMP_DIR/ -name update.zip -exec unzip {} -d $OPENC_KK_DIR \;
+		) || (echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1)
 	elif [[ ! -d $OPENC_KK_DIR ]]; then
-		unzip $IN_DIR/openc-kk.zip -d $BASE_DIR  >/dev/null || (echo "$0 : Echec de l'extraction du fichier" && exit 1)
+		(
+			unzip $IN_DIR/kk.zip -d $TMP_DIR >/dev/null &&
+			find $TMP_DIR/ -name update.zip -exec unzip {} -d $OPENC_KK_DIR \;
+		) || (echo "$0 : Echec de l'extraction du fichier" && exit 1)
 	fi
 
-	# Montage du fichier system.img sur un dossier temporaire
-	echo "$0 : Montage de l'image system.img sur un dossier temporaire (le mot de passe root peut être requis pour la commande 'mount')..." &&
-	(sudo mount $OPENC_KK_DIR/system.img $TMP_DIR/img_system_kk >/dev/null || su -c "mount $OPENC_KK_DIR/system.img $TMP_DIR/img_system_kk") &&
-	mkdir -p $TMP_DIR/system/vendor/lib &&
 	echo "$0 : Récupération des blobs..." &&
-	cp -p $TMP_DIR/img_system_kk/vendor/lib/libbt* $TMP_DIR/system/vendor/lib/ &&
-	# Démontage du fichier system.img
-	echo "$0 : Démontage de l'image system.img (le mot de passe root peut être requis pour la commande 'umount')..." &&
-	(sudo umount $TMP_DIR/img_system_kk || su -c "umount $TMP_DIR/img_system_kk") &&
+	mkdir -p $TMP_DIR/system/vendor/lib &&
+	cp -p $OPENC_KK_DIR/system/vendor/lib/libbt* $TMP_DIR/system/vendor/lib/ &&
 	
 	# Arrêt de Firefox OS et remontage de la partition system
 	adb shell stop b2g &&
