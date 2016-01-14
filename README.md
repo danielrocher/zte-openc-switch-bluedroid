@@ -1,6 +1,7 @@
 # zte-openc-switch-bluedroid
 Scripts permettant de passer le ZTE Open C en bluedroid.  
 *Testés sur Debian Wheezy (7.X) et Debian Jessie (8.X)*  
+**ATTENTION : Merci de placer ces scripts dans un dossier ne contenant pas d'espace (pas de /home/utilisateur/mon dossier/zte-openc-switch-bluedroid par exemple)**  
 
 Liste des scripts :
 - update-bootimage/update-bootimage.sh : Permet de modifier l'image de boot, afin de gérer les changements au niveau du bluetooth.  
