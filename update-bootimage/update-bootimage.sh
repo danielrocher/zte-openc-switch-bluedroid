@@ -39,7 +39,7 @@ fi
 
 (
 	# Vérification des droits en écriture sur le dossier courant
-	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || (echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit)
+	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || { echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit; }
 
 	# Vérification de l'existence du fichier boot.img
 	if [[ ! -f "$IN_DIR/boot.img" ]]; then
@@ -47,15 +47,21 @@ fi
 	fi
 
 	# Re-création de la structure
-	echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
-	rm -rvI "$TMP_DIR" && mkdir "$TMP_DIR"
-	echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$OUT_DIR\"" &&
-	rm -rvI "$OUT_DIR" && mkdir "$OUT_DIR"
+	if [[ -d "$TMP_DIR" ]]; then
+		echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
+		rm -rvI "$TMP_DIR"
+	fi
+	mkdir -p "$TMP_DIR"
+	if [[ -d "$OUT_DIR" ]]; then
+		echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$OUT_DIR\"" &&
+		rm -rvI "$OUT_DIR"
+	fi
+	mkdir -p "$OUT_DIR"
 
 	# Récupération de l'utilitaire mkboot, si nécessaire
 	if [[ ! -d "$MKBOOT_DIR" && ! -f "$IN_DIR/mkboot.zip" ]]; then
 		echo "$0 : Téléchargement et extraction des outils mkboot..." &&
-		(wget -nv -O "$IN_DIR/mkboot.zip" https://github.com/micgeri/mkbootimg_tools/archive/bootimg-openc-ok.zip && unzip "$IN_DIR/mkboot.zip" -d "$BASE_DIR" >/dev/null) || (echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1)
+		(wget -nv -O "$IN_DIR/mkboot.zip" https://github.com/micgeri/mkbootimg_tools/archive/bootimg-openc-ok.zip && unzip "$IN_DIR/mkboot.zip" -d "$BASE_DIR" >/dev/null) || { echo "$0 : Impossible de télécharger l'utilitaire mkboot" && exit 1; }
 	elif [[ ! -d "$MKBOOT_DIR" ]]; then
 		echo "$0 : Extraction des outils mkboot..." &&
 		unzip "$IN_DIR/mkboot.zip" -d "$BASE_DIR" >/dev/null

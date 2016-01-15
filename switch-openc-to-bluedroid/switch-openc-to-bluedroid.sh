@@ -37,7 +37,7 @@ fi
 
 (
 	# Vérification des droits en écriture sur le dossier courant
-	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || (echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit 1)
+	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || { echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit; }
 
 	# Vérification de l'existence du fichier boot.img
 	if [[ ! -f "$IN_DIR/boot.img" ]]; then
@@ -51,8 +51,11 @@ fi
 	fi
 
 	# Re-création de la structure
-	echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
-	rm -rvI "$TMP_DIR" && mkdir "$TMP_DIR"
+	if [[ -d "$TMP_DIR" ]]; then
+		echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
+		rm -rvI "$TMP_DIR"
+	fi
+	mkdir -p "$TMP_DIR"
 
 	# Extraction du zip contenant les fichiers
 	echo "$0 : Extraction de l'archive contenant les premiers fichiers pour bluedroid..." &&
@@ -61,17 +64,17 @@ fi
 	# Téléchargement et extraction de l'archive contenant les fichiers
 	if [[ ! -d "$OPENC_KK_DIR" && ! -f "$IN_DIR/kk.zip" ]]; then
 		(
-			echo "$0 : Téléchargement et extraction si nécessaire de l'archive Kitkat pour Open C..." &&
+			echo "$0 : Téléchargement et extraction de l'archive Kitkat pour Open C..." &&
 			wget -nv -O "$IN_DIR/kk.zip" http://download.ztedevice.com/UpLoadFiles/product/643/4880/soft/2014101309394339.zip &&
 			unzip "$IN_DIR/kk.zip" -d "$TMP_DIR" >/dev/null &&
 			find "$TMP_DIR/" -name update.zip -exec unzip {} -d "$OPENC_KK_DIR" \;
-		) || (echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1)
+		) || { echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1; }
 	elif [[ ! -d "$OPENC_KK_DIR" ]]; then
 		(
-			echo "$0 : Extraction si nécessaire de l'archive Kitkat pour Open C..." &&
+			echo "$0 : Extraction de l'archive Kitkat pour Open C..." &&
 			unzip "$IN_DIR/kk.zip" -d "$TMP_DIR" >/dev/null &&
 			find "$TMP_DIR/" -name update.zip -exec unzip {} -d "$OPENC_KK_DIR" \;
-		) || (echo "$0 : Echec de l'extraction du fichier" && exit 1)
+		) || { echo "$0 : Echec de l'extraction du fichier" && exit 1; }
 	fi
 
 	echo "$0 : Récupération des blobs..." &&

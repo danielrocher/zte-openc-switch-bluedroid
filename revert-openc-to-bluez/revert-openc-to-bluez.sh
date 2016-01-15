@@ -37,11 +37,11 @@ fi
 
 (
 	# Vérification des droits en écriture sur le dossier courant
-	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || (echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit 1)
+	(touch "$TESTW_FILE" 2>/dev/null && rm "$TESTW_FILE" 2>/dev/null) || { echo "$0 : Merci de donner les droits en écriture au dossier de ce script" && exit; }
 
 	# Vérification de l'existence du fichier boot.img
 	if [[ ! -f "$IN_DIR/boot.img" ]]; then
-		cp "$UPDATE_BOOTIMG_IN_DIR/boot.img" "$IN_DIR" || (echo "$0 : Merci de copier le fichier boot.img modifié dans le dossier $IN_DIR" && exit 1)
+		cp "$UPDATE_BOOTIMG_IN_DIR/boot.img" "$IN_DIR" || { echo "$0 : Merci de copier le fichier boot.img modifié dans le dossier $IN_DIR" && exit 1; }
 	fi
 
 	# Vérification de la présence du téléphone
@@ -51,8 +51,11 @@ fi
 	fi
 
 	# Re-création de la structure
-	echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
-	rm -rvI "$TMP_DIR" && mkdir -p "$TMP_DIR/img_system_base"
+	if [[ -d "$TMP_DIR" ]]; then
+		echo "$0 : Confirmer l'exécution de la commande -> rm -rvI \"$TMP_DIR\"" &&
+		rm -rvI "$TMP_DIR"
+	fi
+	mkdir -p "$TMP_DIR/img_system_base"
 
 	# Téléchargement et extraction de l'archive contenant les fichiers
 	echo "$0 : Téléchargement et extraction si nécessaire des fichiers du Pack Root pour Open C..."
@@ -61,13 +64,10 @@ fi
 			wget -nv -O "$IN_DIR/packroot.zip" http://www.ztefrance.com/downloads/Pack_root_du_ZTE_Open_C.zip &&
 			unzip "$IN_DIR/packroot.zip" -d "$TMP_DIR" >/dev/null &&
 			unzip "$TMP_DIR/Pack root du ZTE Open C/P821A10_FR_ENG_20140806.zip" -d "$BASE_DIR" >/dev/null
-		) || (
-			echo "$0 : Le téléchargement a échoué, merci de réessayer" &&
-			exit 1
-		)
+		) || { echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1; }
 	elif [[ ! -d "$OPENC_BASE_DIR" ]]; then
 		(unzip "$IN_DIR/packroot.zip" -d "$TMP_DIR" >/dev/null && unzip "$TMP_DIR/Pack root du ZTE Open C/P821A10_FR_ENG_20140806.zip" -d "$BASE_DIR" >/dev/null) ||
-		(echo "$0 : Echec de l'extraction du fichier" && exit 1)
+		{ echo "$0 : Echec de l'extraction du fichier" && exit 1; }
 	fi
 
 	# Montage du fichier system.img sur un dossier temporaire
@@ -75,7 +75,7 @@ fi
 	(sudo mount "$OPENC_BASE_DIR/system.img" "$TMP_DIR/img_system_base" >/dev/null || su -c "mount $OPENC_BASE_DIR/system.img $TMP_DIR/img_system_base") &&
 	mkdir -p "$TMP_DIR/system/etc" &&
 	echo "$0 : Rassemblement des fichiers d'origine..." &&
-	cp -pR "$TMP_DIR/img_system_base/etc/bluetooth $TMP_DIR/system/etc/" &&
+	cp -pR "$TMP_DIR/img_system_base/etc/bluetooth" "$TMP_DIR/system/etc/" &&
 	mkdir -p "$TMP_DIR/system/bin" && cp -p "$TMP_DIR/img_system_base/bin/bluetoothd" "$TMP_DIR/system/bin/" &&
 	mkdir -p "$TMP_DIR/system/lib/hw" && cp -p "$TMP_DIR/img_system_base/lib/hw/audio.a2dp.default.so" "$TMP_DIR/system/lib/hw/" &&
 	# Démontage du fichier system.img
