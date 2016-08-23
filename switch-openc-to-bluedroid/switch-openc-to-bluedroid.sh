@@ -65,7 +65,7 @@ fi
 	if [[ ! -d "$OPENC_KK_DIR" && ! -f "$IN_DIR/kk.zip" ]]; then
 		(
 			echo "$0 : Téléchargement et extraction de l'archive Kitkat pour Open C..." &&
-			wget -nv -O "$IN_DIR/kk.zip" http://download.ztedevice.com/UpLoadFiles/product/643/4880/soft/2014101309394339.zip &&
+			wget -nv -O "$IN_DIR/kk.zip" http://download.ztedevice.com/device/global/support/product/643/4880/sd/2014101309394339.zip &&
 			unzip "$IN_DIR/kk.zip" -d "$TMP_DIR" >/dev/null &&
 			find "$TMP_DIR/" -name update.zip -exec unzip {} -d "$OPENC_KK_DIR" \;
 		) || { echo "$0 : Le téléchargement a échoué, merci de réessayer" && exit 1; }
